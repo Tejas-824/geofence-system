@@ -20,7 +20,7 @@ export default function App() {
   return (
     <AlertsProvider>
       <div className="min-h-screen bg-slate-50 text-slate-800">
-        <header className="sticky top-0 z-[1500] border-b border-slate-200 bg-white">
+        <header className="sticky top-0 z-1500 border-b border-slate-200 bg-white">
           <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3">
             <h1 className="shrink-0 font-bold text-blue-700">Geofence Tracker</h1>
             <nav className="flex gap-1 overflow-x-auto text-sm">

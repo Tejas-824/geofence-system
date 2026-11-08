@@ -5,7 +5,7 @@ export const CATEGORIES = {
   customer_area: { label: 'Customer area', color: '#16a34a' },
 }
 
-export const DEFAULT_CENTER = [37.7749, -122.4194]
+export const DEFAULT_CENTER = [28.6139, 77.2090]
 
 export const inputCls =
   'w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500'

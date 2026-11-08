@@ -90,7 +90,7 @@ export default function Dashboard() {
           picked={picked}
           focus={geofences[0]?.coordinates[0]}
           onMapClick={handleMapClick}
-          className="h-[32rem]"
+          className="h-128rem"
         />
         <p className="mt-2 text-xs text-slate-500">Click anywhere on the map to set a vehicle location.</p>
       </div>
