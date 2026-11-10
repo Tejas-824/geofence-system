@@ -34,6 +34,7 @@ export default function GeoMap({
     <MapContainer
       center={focus ?? DEFAULT_CENTER}
       zoom={13}
+      style={{ height: '32rem' }}
       className={`${className} z-0 w-full rounded-xl border border-slate-200`}
     >
       <TileLayer

@@ -109,7 +109,7 @@ curl "http://localhost:8080/geofences?category=restricted_zone"
 curl -X POST http://localhost:8080/vehicles \
   -H "Content-Type: application/json" \
   -d '{
-    "vehicle_number": "KA-01-AB-1234",
+    "vehicle_number": "DL-01-AB-1234",
     "driver_name": "John Doe",
     "vehicle_type": "truck",
     "phone": "+1234567890"

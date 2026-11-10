@@ -62,7 +62,7 @@ export default function Vehicles() {
       <form onSubmit={submit} className={`${cardCls} h-fit space-y-3`}>
         <h2 className="font-semibold">Register vehicle</h2>
         <Field label="Vehicle number">
-          <input className={inputCls} value={form.vehicle_number} onChange={setField('vehicle_number')} placeholder="KA-01-AB-1234" required />
+          <input className={inputCls} value={form.vehicle_number} onChange={setField('vehicle_number')} placeholder="DL-01-AB-1234" required />
         </Field>
         <Field label="Driver name">
           <input className={inputCls} value={form.driver_name} onChange={setField('driver_name')} required />
