@@ -2,9 +2,12 @@
 
 A small app to draw zones on a map, track vehicles, and get a live alert when a vehicle enters or leaves a zone.
 
-- Backend: Go + PostgreSQL with PostGIS
-- Frontend: React + Tailwind + Leaflet (OpenStreetMap, free)
-- Live alerts: WebSocket at `/ws/alerts`
+# Tech Stack
+Backend: Go
+Database: PostgreSQL with PostGIS for storing and handling location data.
+Frontend: React and Tailwind CSS
+Maps: Leaflet with OpenStreetMap
+Real-time alerts: WebSocket (/ws/alerts)
 
 ## What you need
 
@@ -16,23 +19,18 @@ A small app to draw zones on a map, track vehicles, and get a live alert when a 
 ## Run it locally
 
 ### 1. Database
-
 Make an empty database called `geofence`. The app creates all the tables itself when it starts.
-
-If you use your own Postgres, PostGIS must be installed (Stack Builder does it on Windows).
+If you use your own Postgres, PostGIS must be installed.
 
 ### 2. Backend
-
 Go to the `backend` folder and make a `.env` file:
-
 ```
 PORT=8080
-DATABASE_URL=postgres://postgres:YOUR_PASSWORD@localhost:5432/geofence?sslmode=disable
+DATABASE_URL=postgres://postgres:YOUR_PASSWORD@localhost:5432/geofence
 ALLOWED_ORIGINS=http://localhost:5173
 ```
 
 Then:
-
 ```
 cd backend
 go mod tidy
@@ -42,13 +40,11 @@ go run ./cmd/server
 Check it: open http://localhost:8080/health. You should see `{"status":"ok", ...}`.
 
 ### 3. Frontend
-
 Make `frontend/.env`:
 
 ```
 VITE_API_URL=http://localhost:8080
 ```
-
 Then:
 
 ```
@@ -62,11 +58,9 @@ Open http://localhost:5173.
 ## Run with Docker Compose
 
 From the main folder:
-
 ```
 docker compose up --build
 ```
-
 This starts a PostGIS database (on port 5433) and the backend (on port 8080). The frontend is still run with `npm run dev`.
 
 ## Testing the API with curl
@@ -81,15 +75,15 @@ Every response has a `time_ns` field (how long the request took, in nanoseconds)
 curl -X POST http://localhost:8080/geofences \
   -H "Content-Type: application/json" \
   -d '{
-    "name": "Downtown Restricted Zone",
+    "name": "Connaught Place Restricted Zone",
     "description": "No trucks allowed here",
     "category": "restricted_zone",
     "coordinates": [
-      [37.7749, -122.4194],
-      [37.7849, -122.4194],
-      [37.7849, -122.4094],
-      [37.7749, -122.4094],
-      [37.7749, -122.4194]
+      [28.6280, 77.2060],
+      [28.6280, 77.2200],
+      [28.6350, 77.2200],
+      [28.6350, 77.2060],
+      [28.6280, 77.2060]
     ]
   }'
 ```
@@ -110,9 +104,9 @@ curl -X POST http://localhost:8080/vehicles \
   -H "Content-Type: application/json" \
   -d '{
     "vehicle_number": "DL-01-AB-1234",
-    "driver_name": "John Doe",
+    "driver_name": "Rahul Sharma",
     "vehicle_type": "truck",
-    "phone": "+1234567890"
+    "phone": "+919876543210"
   }'
 ```
 
@@ -147,16 +141,16 @@ curl "http://localhost:8080/alerts?geofence_id=GEOFENCE_ID"
 
 **7. Send a vehicle location**
 
-This point is inside the zone from step 1, so it counts as an entry:
+This point is inside the Connaught Place zone from step 1, so it counts as an entry:
 
 ```
 curl -X POST http://localhost:8080/vehicles/location \
   -H "Content-Type: application/json" \
   -d '{
     "vehicle_id": "VEHICLE_ID",
-    "latitude": 37.7799,
-    "longitude": -122.4144,
-    "timestamp": "2025-01-15T10:35:00Z"
+    "latitude": 28.6315,
+    "longitude": 77.2130,
+    "timestamp": "2026-11-11T10:35:00Z"
   }'
 ```
 
@@ -167,9 +161,9 @@ curl -X POST http://localhost:8080/vehicles/location \
   -H "Content-Type: application/json" \
   -d '{
     "vehicle_id": "VEHICLE_ID",
-    "latitude": 37.7000,
-    "longitude": -122.3000,
-    "timestamp": "2025-01-15T10:40:00Z"
+    "latitude": 28.5500,
+    "longitude": 77.2500,
+    "timestamp": "2026-11-11T10:40:00Z"
   }'
 ```
 
@@ -185,7 +179,7 @@ All filters are optional. `limit` is 50 by default and 500 at most. `offset` is 
 
 ```
 curl "http://localhost:8080/violations/history?vehicle_id=VEHICLE_ID&limit=20"
-curl "http://localhost:8080/violations/history?start_date=2025-01-01T00:00:00Z&end_date=2025-12-31T23:59:59Z"
+curl "http://localhost:8080/violations/history?start_date=2026-01-01T00:00:00Z&end_date=2026-12-31T23:59:59Z"
 ```
 
 ### Testing the live alerts
